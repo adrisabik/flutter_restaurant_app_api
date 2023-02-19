@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_restaurant_app_api/screen/search_page.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_restaurant_app_api/screen/search_page.dart';
 import 'package:flutter_restaurant_app_api/data/model/restaurant.dart';
 import 'package:flutter_restaurant_app_api/provider/restaurants_provider.dart';
 import 'package:flutter_restaurant_app_api/screen/detail_page.dart';
@@ -16,7 +16,7 @@ class RestaurantList extends StatelessWidget {
         title: const Text('Restaurant Apps'),
         actions: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 20.0),
+            padding: const EdgeInsets.only(right: 20.0),
             child: GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, SearchPage.routeName);
@@ -63,7 +63,6 @@ class RestaurantList extends StatelessWidget {
                   itemBuilder: (context, index) {
                     var restaurant = state.result.restaurants[index];
                     return _buildRestaurantItem(context, restaurant);
-                    // return Text(restaurant!);
                   }
                 );
               } else if (state.state == ResultState.noData) {

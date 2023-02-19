@@ -21,7 +21,23 @@ class ApiService {
     if (response.statusCode == 200) {
       return RestaurantDetailResult.fromJson(json.decode(response.body));
     } else {
+      throw Exception('Failed to load detail restaurant');
+    }
+  }
+
+  Future<RestaurantsResult> restaurantSearch(query) async {
+    final response = await http.get(Uri.parse("${_baseUrl}search?q=$query"));
+    if (response.statusCode == 200) {
+      return RestaurantsResult.fromJson(json.decode(response.body));
+    } else {
       throw Exception('Failed to load list restaurant');
     }
+    // await http.get(Uri.parse("${_baseUrl}search?q=$query")).then((response){
+    //   if(response.statusCode == 200){
+    //     return RestaurantsResult.fromJson(json.decode(response.body));
+    //   }
+    // });
+    // throw Exception('Failed to load search restaurant');
+    
   }
 }
