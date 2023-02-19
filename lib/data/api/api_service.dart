@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_restaurant_app_api/data/model/restaurant.dart';
-import 'package:flutter_restaurant_app_api/data/model/restaurantDetail.dart';
+import 'package:flutter_restaurant_app_api/data/model/restaurant_detail.dart';
  
 class ApiService {
   static const String _baseUrl = 'https://restaurant-api.dicoding.dev/';
