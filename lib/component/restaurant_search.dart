@@ -14,7 +14,7 @@ class RestaurantSearch extends StatelessWidget{
     return Consumer<RestaurantSearchProvider>(
       builder: (context, state, _) {
         if (state.state == ResultState.loading) {
-          return Container(
+          return SizedBox(
             height: size.height * 0.6,
             child: const Center(
               child: CircularProgressIndicator(),
@@ -33,7 +33,7 @@ class RestaurantSearch extends StatelessWidget{
         } else if (state.state == ResultState.noData) {
           return const Center(
             child: Material(
-              child: Text("Data kosong"),
+              child: Text("Restoran tidak ada"),
             ),
           );
         } else if (state.state == ResultState.error) {

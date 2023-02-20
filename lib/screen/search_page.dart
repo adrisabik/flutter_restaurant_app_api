@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_restaurant_app_api/data/api/api_service.dart';
 import 'package:flutter_restaurant_app_api/provider/restaurant_search_provider.dart';
 import 'package:flutter_restaurant_app_api/component/restaurant_search.dart';
+import 'dart:developer';
 
 class SearchPage extends StatefulWidget {
   static const routeName = '/search';
@@ -17,6 +18,13 @@ class _SearchPageState extends State<SearchPage> {
   String _query = '';
   
   @override
+  initState() {
+    ChangeNotifierProvider<RestaurantSearchProvider>(
+      create: (_) => RestaurantSearchProvider(apiService: ApiService(), query: _query),
+      child: const RestaurantSearch(),
+    );
+  }
+  
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
@@ -52,23 +60,23 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 onSubmitted: (value) {
                   setState(() {
+                    log('value: $value');
                     _query = value;
                   });
                 },
               ),
               Container(
                 child: _query.isEmpty
-                  ? Container(
+                  ? SizedBox(
                       height: size.height * 0.6,
                       child: const Center(
                         child: Text('Restaurants Emtpy')
                       )
                     )
-                  : ChangeNotifierProvider<RestaurantSearchProvider>(
-                    create: (_) => RestaurantSearchProvider(apiService: ApiService(), query: _query),
+                  : ChangeNotifierProvider.value(
+                    value: RestaurantSearchProvider(apiService: ApiService(), query: _query),
                     child: const RestaurantSearch(),
-                  ),
-                  // : Text(_query)
+                  )
               ),
             ],
           ),
