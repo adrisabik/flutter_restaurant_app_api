@@ -18,6 +18,8 @@ class _SearchPageState extends State<SearchPage> {
   
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search Restaurant'),
@@ -40,25 +42,28 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
               const SizedBox(height: 8),
-              Container(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search Restaurant',
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search Restaurant',
+                  prefixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  onSubmitted: (value) {
-                    setState(() {
-                      _query = value;
-                    });
-                  },
                 ),
+                onSubmitted: (value) {
+                  setState(() {
+                    _query = value;
+                  });
+                },
               ),
               Container(
                 child: _query.isEmpty
-                  ? const Center(child: Text('Empty'))
+                  ? Container(
+                      height: size.height * 0.6,
+                      child: const Center(
+                        child: Text('Restaurants Emtpy')
+                      )
+                    )
                   : ChangeNotifierProvider<RestaurantSearchProvider>(
                     create: (_) => RestaurantSearchProvider(apiService: ApiService(), query: _query),
                     child: const RestaurantSearch(),

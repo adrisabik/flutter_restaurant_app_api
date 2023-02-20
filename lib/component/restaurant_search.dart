@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_restaurant_app_api/data/model/restaurant.dart';
+import 'package:flutter_restaurant_app_api/data/model/restaurant_search.dart';
 import 'package:flutter_restaurant_app_api/provider/restaurant_search_provider.dart';
 import 'package:flutter_restaurant_app_api/screen/detail_page.dart';
 
@@ -9,10 +9,17 @@ class RestaurantSearch extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
+    Size size = MediaQuery.of(context).size;
+
     return Consumer<RestaurantSearchProvider>(
       builder: (context, state, _) {
         if (state.state == ResultState.loading) {
-          return const Center(child: CircularProgressIndicator());
+          return Container(
+            height: size.height * 0.6,
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         } else if (state.state == ResultState.hasData) {
           return ListView.builder(
             shrinkWrap: true,
@@ -24,15 +31,15 @@ class RestaurantSearch extends StatelessWidget{
             }
           );
         } else if (state.state == ResultState.noData) {
-          return Center(
+          return const Center(
             child: Material(
-              child: Text(state.message),
+              child: Text("Data kosong"),
             ),
           );
         } else if (state.state == ResultState.error) {
-          return Center(
+          return const Center(
             child: Material(
-              child: Text(state.message),
+              child: Text("Periksas kembali koneksi internet anda"),
             ),
           );
         } else {

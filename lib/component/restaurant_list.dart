@@ -66,15 +66,15 @@ class RestaurantList extends StatelessWidget {
                   }
                 );
               } else if (state.state == ResultState.noData) {
-                return Center(
+                return const Center(
                   child: Material(
-                    child: Text(state.message),
+                    child: Text("Data Kosong"),
                   ),
                 );
               } else if (state.state == ResultState.error) {
-                return Center(
+                return const Center(
                   child: Material(
-                    child: Text(state.message),
+                    child: Text("Periksa kembali koneksi internet anda"),
                   ),
                 );
               } else {
