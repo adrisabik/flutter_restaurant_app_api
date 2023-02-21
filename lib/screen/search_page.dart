@@ -19,12 +19,14 @@ class _SearchPageState extends State<SearchPage> {
   
   @override
   initState() {
+    super.initState();
     ChangeNotifierProvider<RestaurantSearchProvider>(
       create: (_) => RestaurantSearchProvider(apiService: ApiService(), query: _query),
       child: const RestaurantSearch(),
     );
   }
   
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
