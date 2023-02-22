@@ -8,9 +8,9 @@ enum ResultState { loading, noData, hasData, error }
 
 class RestaurantDetailProvider extends ChangeNotifier {
   final ApiService apiService;
-  String id;
+  String ?id;
 
-  RestaurantDetailProvider({required this.apiService, required this.id}) {
+  RestaurantDetailProvider({required this.apiService, this.id}) {
     _fetchDetailRestaurant();
   }
 

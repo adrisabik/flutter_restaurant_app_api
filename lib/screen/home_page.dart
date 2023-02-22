@@ -14,7 +14,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _bottomNavIndex = 0;
-  static const String _headlineText = 'Restaurant App';
 
   final List<Widget> _listWidget = [
     const ListPage(),
@@ -24,11 +23,11 @@ class _HomePageState extends State<HomePage> {
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     const BottomNavigationBarItem(
       icon: Icon(Icons.home),
-      label: _headlineText,
+      label: 'Home',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.favorite),
-      label: _headlineText,
+      label: 'Favourite',
     ),
   ];
 
@@ -51,13 +50,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return ChangeNotifierProvider<RestaurantsProvider>(
-  //     create: (_) => RestaurantsProvider(apiService: ApiService()),
-  //     child: const RestaurantList(),
-  //   );
-  // }
-
-  
 }

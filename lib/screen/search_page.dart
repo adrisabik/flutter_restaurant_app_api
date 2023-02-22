@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_restaurant_app_api/data/api/api_service.dart';
 import 'package:flutter_restaurant_app_api/provider/restaurant_search_provider.dart';
-import 'package:flutter_restaurant_app_api/component/restaurant_search.dart';
-import 'dart:developer';
+import 'package:flutter_restaurant_app_api/widgets/restaurant_list_search.dart';
 
 class SearchPage extends StatefulWidget {
   static const routeName = '/search';
@@ -16,15 +15,6 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   String _query = '';
-  
-  @override
-  initState() {
-    super.initState();
-    ChangeNotifierProvider<RestaurantSearchProvider>(
-      create: (_) => RestaurantSearchProvider(apiService: ApiService(), query: _query),
-      child: const RestaurantSearch(),
-    );
-  }
   
   @override
   Widget build(BuildContext context) {
@@ -62,7 +52,6 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 onSubmitted: (value) {
                   setState(() {
-                    log('value: $value');
                     _query = value;
                   });
                 },
@@ -75,15 +64,60 @@ class _SearchPageState extends State<SearchPage> {
                         child: Text('Restaurants Emtpy')
                       )
                     )
-                  : ChangeNotifierProvider.value(
-                    value: RestaurantSearchProvider(apiService: ApiService(), query: _query),
-                    child: const RestaurantSearch(),
-                  )
+                  : _build(context)
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return ChangeNotifierProvider.value(
+      value: RestaurantSearchProvider(apiService: ApiService(), query: _query),
+      child: Consumer<RestaurantSearchProvider>(
+        builder: (context, state, _) {
+          if (state.state == ResultState.loading) {
+            return SizedBox(
+              height: size.height * 0.6,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (state.state == ResultState.hasData) {
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.result.restaurants.length,
+              itemBuilder: (context, index) {
+                var restaurant = state.result.restaurants[index];
+                return RestaurantList(restaurant: restaurant);
+              }
+            );
+          } else if (state.state == ResultState.noData) {
+            return const Center(
+              child: Material(
+                child: Text("Restoran tidak ada"),
+              ),
+            );
+          } else if (state.state == ResultState.error) {
+            return const Center(
+              child: Material(
+                child: Text("Periksas kembali koneksi internet anda"),
+              ),
+            );
+          } else {
+            return const Center(
+              child: Material(
+                child: Text(''),
+              ),
+            );
+          }
+        },
+      )
     );
   }
 }
