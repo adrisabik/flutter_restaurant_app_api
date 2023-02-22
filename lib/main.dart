@@ -7,6 +7,8 @@ import 'package:flutter_restaurant_app_api/provider/restaurant_search_provider.d
 import 'package:flutter_restaurant_app_api/screen/home_page.dart';
 import 'package:flutter_restaurant_app_api/screen/detail_page.dart';
 import 'package:flutter_restaurant_app_api/screen/search_page.dart';
+import 'package:flutter_restaurant_app_api/data/db/database_helper.dart';
+import 'package:flutter_restaurant_app_api/provider/database_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +29,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<RestaurantSearchProvider>(
           create: (_) => RestaurantSearchProvider(apiService: ApiService(), query: null)
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper())
         )
       ],
       child: MaterialApp(
