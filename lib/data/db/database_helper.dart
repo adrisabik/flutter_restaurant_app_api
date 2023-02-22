@@ -1,6 +1,5 @@
 import 'package:flutter_restaurant_app_api/data/model/restaurant.dart';
 import 'package:sqflite/sqflite.dart';
-import 'dart:developer';
 
 class DatabaseHelper {
   static DatabaseHelper? _instance;
@@ -42,7 +41,6 @@ class DatabaseHelper {
   }
 
   Future<void> insertFavourite(Restaurant restaurant) async {
-    log(restaurant.pictureId);
     final db = await database;
     await db!.insert(_tblFavourite, restaurant.toJson());
   }

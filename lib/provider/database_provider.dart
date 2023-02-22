@@ -18,7 +18,7 @@ class DatabaseProvider extends ChangeNotifier {
   String get message => _message;
 
   List<Restaurant> _favourites = [];
-  List<Restaurant> get bookmarks => _favourites;
+  List<Restaurant> get favourites => _favourites;
 
   void _getFavourites() async {
     _favourites = await databaseHelper.getFavourites();
