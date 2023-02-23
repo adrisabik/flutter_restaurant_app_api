@@ -33,14 +33,6 @@ class _SearchPageState extends State<SearchPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 24),
-              const Text(
-                'Search Restaurant',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               const SizedBox(height: 8),
               TextField(
                 decoration: InputDecoration(
@@ -61,7 +53,7 @@ class _SearchPageState extends State<SearchPage> {
                   ? SizedBox(
                       height: size.height * 0.6,
                       child: const Center(
-                        child: Text('Restaurants Emtpy')
+                        child: Text('\nHarap isi searchbar')
                       )
                     )
                   : _build(context)
@@ -100,13 +92,13 @@ class _SearchPageState extends State<SearchPage> {
           } else if (state.state == ResultState.noData) {
             return const Center(
               child: Material(
-                child: Text("Restoran tidak ada"),
+                child: Text("\nRestoran tidak ada"),
               ),
             );
           } else if (state.state == ResultState.error) {
             return const Center(
               child: Material(
-                child: Text("Periksas kembali koneksi internet anda"),
+                child: Text("\nPeriksas kembali koneksi internet anda"),
               ),
             );
           } else {

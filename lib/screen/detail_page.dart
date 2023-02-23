@@ -35,13 +35,13 @@ class DetailPage extends StatelessWidget {
           } else if (state.state == ResultState.noData) {
             return const Center(
               child: Material(
-                child: Text("Data Kosong"),
+                child: Text("\nData Kosong"),
               ),
             );
           } else if (state.state == ResultState.error) {
             return const Center(
               child: Material(
-                child: Text("Periksa kembali koneksi internet anda"),
+                child: Text("\nPeriksa kembali koneksi internet anda"),
               ),
             );
           } else {
