@@ -40,7 +40,7 @@ class NotificationHelper {
   }
 
   Future<void> showNotification(
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, RestaurantsResult restaurants) async {
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin, Restaurant restaurant) async {
     var channelId = "1";
     var channelName = "channel_01";
     var channelDescription = "restaurants app channel";
@@ -58,12 +58,12 @@ class NotificationHelper {
       android: androidPlatformChannelSpecifics,
     );
 
-    var titleNotification = "<b>Restaurant</b>";
-    var titleRestaurants = restaurants.restaurants[0].name;
+    var titleNotification = "<b>Recommended Restaurant for you!</b>";
+    var titleRestaurants = restaurant.name;
 
     await flutterLocalNotificationsPlugin.show(
       0, titleNotification, titleRestaurants, platformChannelSpecifics,
-      payload: json.encode(restaurants.toJson())
+      payload: json.encode(restaurant.toJson())
     );
   }
 
