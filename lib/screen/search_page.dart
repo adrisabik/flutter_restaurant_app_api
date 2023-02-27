@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_restaurant_app_api/data/api/api_service.dart';
 import 'package:flutter_restaurant_app_api/provider/restaurant_search_provider.dart';
-import 'package:flutter_restaurant_app_api/component/restaurant_search.dart';
-import 'dart:developer';
+import 'package:flutter_restaurant_app_api/widgets/restaurant_list_search.dart';
 
 class SearchPage extends StatefulWidget {
   static const routeName = '/search';
@@ -18,13 +17,6 @@ class _SearchPageState extends State<SearchPage> {
   String _query = '';
   
   @override
-  initState() {
-    ChangeNotifierProvider<RestaurantSearchProvider>(
-      create: (_) => RestaurantSearchProvider(apiService: ApiService(), query: _query),
-      child: const RestaurantSearch(),
-    );
-  }
-  
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
@@ -41,14 +33,6 @@ class _SearchPageState extends State<SearchPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 24),
-              const Text(
-                'Search Restaurant',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               const SizedBox(height: 8),
               TextField(
                 decoration: InputDecoration(
@@ -60,7 +44,6 @@ class _SearchPageState extends State<SearchPage> {
                 ),
                 onSubmitted: (value) {
                   setState(() {
-                    log('value: $value');
                     _query = value;
                   });
                 },
@@ -70,18 +53,63 @@ class _SearchPageState extends State<SearchPage> {
                   ? SizedBox(
                       height: size.height * 0.6,
                       child: const Center(
-                        child: Text('Restaurants Emtpy')
+                        child: Text('\nHarap isi searchbar')
                       )
                     )
-                  : ChangeNotifierProvider.value(
-                    value: RestaurantSearchProvider(apiService: ApiService(), query: _query),
-                    child: const RestaurantSearch(),
-                  )
+                  : _build(context)
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return ChangeNotifierProvider.value(
+      value: RestaurantSearchProvider(apiService: ApiService(), query: _query),
+      child: Consumer<RestaurantSearchProvider>(
+        builder: (context, state, _) {
+          if (state.state == ResultState.loading) {
+            return SizedBox(
+              height: size.height * 0.6,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (state.state == ResultState.hasData) {
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.result.restaurants.length,
+              itemBuilder: (context, index) {
+                var restaurant = state.result.restaurants[index];
+                return RestaurantList(restaurant: restaurant);
+              }
+            );
+          } else if (state.state == ResultState.noData) {
+            return const Center(
+              child: Material(
+                child: Text("\nRestoran tidak ada"),
+              ),
+            );
+          } else if (state.state == ResultState.error) {
+            return const Center(
+              child: Material(
+                child: Text("\nPeriksas kembali koneksi internet anda"),
+              ),
+            );
+          } else {
+            return const Center(
+              child: Material(
+                child: Text(''),
+              ),
+            );
+          }
+        },
+      )
     );
   }
 }
