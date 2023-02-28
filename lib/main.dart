@@ -41,6 +41,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper())
+        ),
         ChangeNotifierProvider<RestaurantsProvider>(
           create: (_) => RestaurantsProvider(apiService: ApiService()),
         ),
@@ -60,9 +63,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<RestaurantSearchProvider>(
           create: (_) => RestaurantSearchProvider(apiService: ApiService(), query: null)
         ),
-        ChangeNotifierProvider(
-          create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper())
-        )
       ],
       child: MaterialApp(
         title: 'Restaruant App API',

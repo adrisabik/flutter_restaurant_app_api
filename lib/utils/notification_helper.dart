@@ -54,8 +54,11 @@ class NotificationHelper {
       styleInformation: const DefaultStyleInformation(true, true)
     );
 
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+
     var platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics
     );
 
     var titleNotification = "<b>Recommended Restaurant for you!</b>";

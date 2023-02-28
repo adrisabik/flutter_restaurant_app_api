@@ -1,5 +1,6 @@
 import 'package:flutter_restaurant_app_api/data/model/restaurant.dart';
 import 'package:sqflite/sqflite.dart';
+import 'dart:developer';
 
 class DatabaseHelper {
   static DatabaseHelper? _instance;
@@ -14,6 +15,7 @@ class DatabaseHelper {
   static const String _tblFavourite = 'favourites';
 
   Future<Database> _initializeDb() async {
+    log('initializeDb');
     var path = await getDatabasesPath();
     var db = openDatabase(
       '$path/restaurantsapp.db',
